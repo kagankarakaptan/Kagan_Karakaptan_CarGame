@@ -97,7 +97,13 @@ public class Car : MonoBehaviour
         {
             //loads the new level
             if (phase == exits.Length - 1) //means we are in the last phase of this level
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            {
+                if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1) //means we are in the last level(scene)
+                    SceneManager.LoadScene(0);
+                else
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+            }
 
             else
             {
@@ -111,5 +117,11 @@ public class Car : MonoBehaviour
         recorder.Clear(); //clears the list which keeps the action inside the recorder object
         Start(); //re-starting for the next phase
 
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        recorder.Clear();
+        Start();
     }
 }
